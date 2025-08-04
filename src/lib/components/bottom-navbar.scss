@@ -1,0 +1,96 @@
+.bottom-navbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-top: 1px solid #e5e5e5;
+  z-index: 1000;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
+  display: block;
+
+  @media (min-width: 768px) {
+    display: none;
+  }
+
+  &__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 8px 0 12px;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    min-width: 60px;
+    position: relative;
+
+    &:hover {
+      background: rgba(66, 184, 131, 0.1);
+      color: #42b883;
+    }
+
+    &--active {
+      color: #42b883;
+      
+      .nav-item__icon {
+        transform: scale(1.1);
+      }
+
+      .nav-item__label {
+        font-weight: 600;
+      }
+    }
+
+    &__icon {
+      position: relative;
+      margin-bottom: 4px;
+      transition: transform 0.2s ease;
+
+      .nav-badge {
+        position: absolute;
+        top: -6px;
+        right: -8px;
+        background: #ff4757;
+        color: white;
+        font-size: 9px;
+        padding: 2px 4px;
+        border-radius: 8px;
+        min-width: 14px;
+        height: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        line-height: 1;
+      }
+    }
+
+    &__label {
+      font-size: 11px;
+      font-weight: 500;
+      line-height: 1;
+      text-align: center;
+      letter-spacing: -0.1px;
+    }
+  }
+}
+
+// Safe area untuk iPhone dengan notch
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .bottom-navbar {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}

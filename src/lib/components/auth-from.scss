@@ -1,0 +1,340 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #00AA5B 0%, #42D883 50%, #00D084 100%);
+  padding: 1rem;
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23ffffff" fill-opacity="0.03"><circle cx="30" cy="30" r="2"/></g></svg>') repeat;
+  }
+}
+
+.auth-wrapper {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  padding: 2.5rem;
+  box-shadow: 0 20px 40px rgba(0, 170, 91, 0.15), 
+              0 8px 16px rgba(0, 170, 91, 0.1),
+              inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  width: 100%;
+  max-width: 420px;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
+  @media (max-width: 480px) {
+    padding: 2rem 1.5rem;
+    border-radius: 20px;
+  }
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 2rem;
+
+  .brand-circle {
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, #00AA5B, #42D883);
+    border-radius: 50%;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 24px rgba(0, 170, 91, 0.3);
+    position: relative;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 3px;
+      background: linear-gradient(135deg, #42D883, #00D084);
+      border-radius: 50%;
+    }
+
+    .brand-icon {
+      width: 24px;
+      height: 24px;
+      background: white;
+      border-radius: 6px;
+      position: relative;
+      z-index: 1;
+      
+      &::before {
+        content: '';
+        position: absolute;
+        top: 6px;
+        left: 6px;
+        right: 6px;
+        bottom: 6px;
+        background: #00AA5B;
+        border-radius: 2px;
+      }
+    }
+  }
+
+  h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 0.5rem 0;
+    letter-spacing: -0.02em;
+  }
+
+  .subtitle {
+    color: #666;
+    font-size: 0.95rem;
+    margin: 0;
+    font-weight: 400;
+  }
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.input-group {
+  label {
+    display: block;
+    font-weight: 600;
+    color: #2d2d2d;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    letter-spacing: 0.02em;
+  }
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  
+  .input-icon {
+    position: absolute;
+    left: 1rem;
+    width: 18px;
+    height: 18px;
+    color: #00AA5B;
+    z-index: 2;
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 0.875rem 1rem 0.875rem 3rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    background: white;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: inherit;
+
+    &::placeholder {
+      color: #9ca3af;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: #00AA5B;
+      box-shadow: 0 0 0 4px rgba(0, 170, 91, 0.1);
+      background: #fafffe;
+    }
+
+    &:hover:not(:focus) {
+      border-color: #42D883;
+    }
+  }
+
+  &.password-wrapper {
+    .form-input {
+      padding-right: 3.5rem;
+    }
+  }
+
+  .password-toggle {
+    position: absolute;
+    right: 1rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    z-index: 2;
+
+    &:hover {
+      background: rgba(0, 170, 91, 0.1);
+    }
+
+    .toggle-icon {
+      width: 18px;
+      height: 18px;
+      color: #6b7280;
+      transition: color 0.2s ease;
+    }
+
+    &:hover .toggle-icon {
+      color: #00AA5B;
+    }
+  }
+}
+
+.error-message {
+  background: linear-gradient(135deg, #fee2e2, #fecaca);
+  color: #dc2626;
+  padding: 0.875rem 1rem;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid #fca5a5;
+  font-weight: 500;
+
+  .error-icon {
+    width: 18px;
+    height: 18px;
+    background: #dc2626;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    flex-shrink: 0;
+  }
+}
+
+.submit-btn {
+  background: linear-gradient(135deg, #00AA5B, #42D883);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 170, 91, 0.3);
+  letter-spacing: 0.02em;
+
+  .btn-text {
+    position: relative;
+    z-index: 2;
+  }
+
+  .btn-shine {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s ease;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0, 170, 91, 0.4);
+    background: linear-gradient(135deg, #42D883, #00D084);
+
+    .btn-shine {
+      left: 100%;
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.auth-footer {
+  text-align: center;
+  margin-top: 1rem;
+  
+  p {
+    color: #6b7280;
+    font-size: 0.9rem;
+    margin: 0;
+  }
+
+  .auth-link {
+    color: #00AA5B;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: #42D883;
+      text-decoration: underline;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-header {
+    h2 {
+      font-size: 1.5rem;
+    }
+
+    .brand-circle {
+      width: 56px;
+      height: 56px;
+      margin-bottom: 1rem;
+    }
+  }
+
+  .input-wrapper {
+    .form-input {
+      padding: 0.75rem 1rem 0.75rem 2.75rem;
+      font-size: 0.9rem;
+    }
+
+    .input-icon {
+      width: 16px;
+      height: 16px;
+      left: 0.875rem;
+    }
+
+    &.password-wrapper {
+      .form-input {
+        padding-right: 3rem;
+      }
+    }
+
+    .password-toggle {
+      right: 0.875rem;
+
+      .toggle-icon {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+
+  .submit-btn {
+    padding: 0.875rem 1.5rem;
+    font-size: 0.95rem;
+  }
+}
