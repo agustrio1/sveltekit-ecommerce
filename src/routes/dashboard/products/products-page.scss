@@ -1,0 +1,883 @@
+// Modern Product Management Page SCSS
+// Color Variables - Tokopedia-inspired Green Theme
+$primary-green: #42b883;
+$primary-green-dark: #369870;
+$primary-green-light: #4fc08d;
+$secondary-green: #e8f5e8;
+$accent-green: #2c8f66;
+
+$success: #52c41a;
+$warning: #faad14;
+$danger: #ff4d4f;
+$info: #1890ff;
+
+$gray-50: #fafafa;
+$gray-100: #f5f5f5;
+$gray-200: #e8e8e8;
+$gray-300: #d9d9d9;
+$gray-400: #bfbfbf;
+$gray-500: #8c8c8c;
+$gray-600: #595959;
+$gray-700: #434343;
+$gray-800: #262626;
+$gray-900: #1f1f1f;
+
+$white: #ffffff;
+$black: #000000;
+
+// Typography
+$font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+// Breakpoints
+$mobile: 480px;
+$tablet: 768px;
+$desktop: 1024px;
+$large: 1200px;
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin card-shadow {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+@mixin hover-lift {
+  transition: all 0.3s ease;
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  }
+}
+
+@mixin button-base {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  white-space: nowrap;
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+// Main Container
+.products-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, $gray-50 0%, $secondary-green 100%);
+  font-family: $font-family;
+  
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    
+    @media (max-width: $tablet) {
+      padding: 1rem 0.75rem;
+    }
+  }
+}
+
+// Page Header
+.page-header {
+  @include flex-between;
+  margin-bottom: 2rem;
+  padding: 2rem;
+  background: $white;
+  border-radius: 16px;
+  @include card-shadow;
+  
+  @media (max-width: $tablet) {
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    text-align: center;
+  }
+  
+  .header-content {
+    .page-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: $gray-800;
+      margin: 0 0 0.5rem 0;
+      background: linear-gradient(135deg, $primary-green, $accent-green);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      
+      @media (max-width: $tablet) {
+        font-size: 1.75rem;
+      }
+    }
+    
+    .page-subtitle {
+      color: $gray-600;
+      font-size: 1rem;
+      margin: 0;
+    }
+  }
+  
+  .btn-primary {
+    @include button-base;
+    background: linear-gradient(135deg, $primary-green, $primary-green-dark);
+    color: $white;
+    
+    &:hover {
+      background: linear-gradient(135deg, $primary-green-dark, $accent-green);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba($primary-green, 0.3);
+    }
+    
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
+
+// Search Section
+.search-section {
+  margin-bottom: 2rem;
+  
+  .search-form {
+    display: flex;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: $white;
+    border-radius: 12px;
+    @include card-shadow;
+    
+    @media (max-width: $tablet) {
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .search-input-wrapper {
+      position: relative;
+      flex: 1;
+      
+      .search-icon {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: $gray-500;
+        width: 16px;
+        height: 16px;
+      }
+      
+      .search-input {
+        width: 80%;
+        padding: 0.875rem 1rem 0.875rem 2.75rem;
+        border: 2px solid $gray-200;
+        border-radius: 8px;
+        font-size: 0.875rem;
+        transition: all 0.2s ease;
+        
+        &:focus {
+          outline: none;
+          border-color: $primary-green;
+          box-shadow: 0 0 0 3px rgba($primary-green, 0.1);
+        }
+        
+        &::placeholder {
+          color: $gray-500;
+        }
+      }
+    }
+    
+    .category-filter {
+      min-width: 200px;
+      padding: 0.875rem 1rem;
+      border: 2px solid $gray-200;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      background: $white;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      
+      @media (max-width: $tablet) {
+        min-width: auto;
+      }
+      
+      &:focus {
+        outline: none;
+        border-color: $primary-green;
+        box-shadow: 0 0 0 3px rgba($primary-green, 0.1);
+      }
+    }
+    
+    .btn-search {
+      @include button-base;
+      background: $primary-green;
+      color: $white;
+      min-width: 120px;
+      
+      &:hover:not(:disabled) {
+        background: $primary-green-dark;
+      }
+      
+      &:disabled {
+        background: $gray-400;
+      }
+    }
+  }
+}
+
+// Content Section
+.content-section {
+  .loading-state {
+    @include flex-center;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 4rem 2rem;
+    background: $white;
+    border-radius: 12px;
+    @include card-shadow;
+    
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid $gray-200;
+      border-top: 3px solid $primary-green;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    p {
+      color: $gray-600;
+      font-size: 0.875rem;
+      margin: 0;
+    }
+  }
+  
+  .error-state {
+    @include flex-center;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 4rem 2rem;
+    background: $white;
+    border-radius: 12px;
+    @include card-shadow;
+    text-align: center;
+    
+    svg {
+      color: $danger;
+      width: 48px;
+      height: 48px;
+    }
+    
+    .error-message {
+      color: $gray-700;
+      font-size: 1rem;
+      margin: 0;
+    }
+    
+    .btn-retry {
+      @include button-base;
+      background: $primary-green;
+      color: $white;
+      
+      &:hover {
+        background: $primary-green-dark;
+      }
+    }
+  }
+  
+  .empty-state {
+    @include flex-center;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 4rem 2rem;
+    background: $white;
+    border-radius: 12px;
+    @include card-shadow;
+    text-align: center;
+    
+    svg {
+      color: $gray-400;
+      width: 64px;
+      height: 64px;
+    }
+    
+    h3 {
+      color: $gray-700;
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 0;
+    }
+    
+    p {
+      color: $gray-600;
+      font-size: 0.875rem;
+      margin: 0;
+      max-width: 400px;
+    }
+    
+    .btn-primary {
+      @include button-base;
+      background: linear-gradient(135deg, $primary-green, $primary-green-dark);
+      color: $white;
+      
+      &:hover {
+        background: linear-gradient(135deg, $primary-green-dark, $accent-green);
+        transform: translateY(-1px);
+      }
+    }
+  }
+}
+
+// Desktop Table
+.table-container {
+  background: $white;
+  border-radius: 12px;
+  @include card-shadow;
+  overflow: hidden;
+  
+  @media (max-width: $desktop) {
+    display: none;
+  }
+  
+  .products-table {
+    width: 100%;
+    border-collapse: collapse;
+    
+    thead {
+      background: linear-gradient(135deg, $primary-green, $primary-green-dark);
+      
+      th {
+        padding: 1rem 1.5rem;
+        text-align: left;
+        font-weight: 600;
+        font-size: 0.875rem;
+        color: $white;
+        border: none;
+        
+        &:first-child {
+          border-radius: 12px 0 0 0;
+        }
+        
+        &:last-child {
+          border-radius: 0 12px 0 0;
+        }
+      }
+    }
+    
+    tbody {
+      .table-row {
+        border-bottom: 1px solid $gray-100;
+        transition: all 0.2s ease;
+        
+        &:hover {
+          background: $gray-50;
+        }
+        
+        &:last-child {
+          border-bottom: none;
+        }
+        
+        td {
+          padding: 1.25rem 1.5rem;
+          vertical-align: top;
+          
+          &.product-name {
+            .product-info {
+              .name {
+                font-weight: 600;
+                color: $gray-800;
+                font-size: 0.9375rem;
+                display: block;
+                margin-bottom: 0.25rem;
+              }
+              
+              .slug {
+                font-size: 0.75rem;
+                color: $gray-500;
+                display: block;
+                margin-bottom: 0.5rem;
+                
+                code {
+                  background: $gray-100;
+                  padding: 0.125rem 0.375rem;
+                  border-radius: 4px;
+                  font-family: 'Fira Code', monospace;
+                }
+              }
+              
+              .description {
+                font-size: 0.8125rem;
+                color: $gray-600;
+                margin: 0;
+                line-height: 1.4;
+              }
+            }
+          }
+          
+          &.category {
+            .category-badge {
+              display: inline-flex;
+              align-items: center;
+              padding: 0.375rem 0.75rem;
+              background: $secondary-green;
+              color: $accent-green;
+              border-radius: 6px;
+              font-size: 0.8125rem;
+              font-weight: 500;
+            }
+          }
+          
+          &.price {
+            .price-value {
+              font-weight: 600;
+              color: $primary-green;
+              font-size: 0.9375rem;
+            }
+          }
+          
+          &.stock {
+            .stock-badge {
+              display: inline-flex;
+              align-items: center;
+              padding: 0.375rem 0.75rem;
+              background: $success;
+              color: $white;
+              border-radius: 6px;
+              font-size: 0.8125rem;
+              font-weight: 500;
+              
+              &.low-stock {
+                background: $warning;
+                color: $white;
+              }
+            }
+          }
+          
+          &.image {
+            .image-wrapper {
+              position: relative;
+              width: 60px;
+              height: 60px;
+              border-radius: 8px;
+              overflow: hidden;
+              @include card-shadow;
+              
+              img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+              }
+              
+              .image-count {
+                position: absolute;
+                top: 4px;
+                right: 4px;
+                background: rgba($black, 0.7);
+                color: $white;
+                font-size: 0.625rem;
+                padding: 0.125rem 0.25rem;
+                border-radius: 4px;
+              }
+            }
+            
+            .no-image {
+              @include flex-center;
+              width: 60px;
+              height: 60px;
+              background: $gray-100;
+              border-radius: 8px;
+              color: $gray-400;
+            }
+          }
+          
+          &.actions {
+            .action-buttons {
+              display: flex;
+              gap: 0.5rem;
+              
+              .btn-edit, .btn-delete {
+                @include button-base;
+                padding: 0.5rem 0.75rem;
+                font-size: 0.75rem;
+                
+                svg {
+                  width: 12px;
+                  height: 12px;
+                }
+              }
+              
+              .btn-edit {
+                background: $info;
+                color: $white;
+                
+                &:hover {
+                  background: darken($info, 10%);
+                }
+              }
+              
+              .btn-delete {
+                background: $danger;
+                color: $white;
+                
+                &:hover {
+                  background: darken($danger, 10%);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Mobile Cards
+.mobile-cards {
+  display: none;
+  gap: 1rem;
+  
+  @media (max-width: $desktop) {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .product-card {
+    background: $white;
+    border-radius: 12px;
+    @include card-shadow;
+    @include hover-lift;
+    
+    .card-header {
+      padding: 1.5rem;
+      
+      .product-main {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        
+        .product-image, .product-placeholder {
+          flex-shrink: 0;
+          width: 80px;
+          height: 80px;
+          border-radius: 8px;
+          overflow: hidden;
+          position: relative;
+          
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+          
+          .image-count {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            background: rgba($black, 0.7);
+            color: $white;
+            font-size: 0.625rem;
+            padding: 0.125rem 0.25rem;
+            border-radius: 4px;
+          }
+        }
+        
+        .product-placeholder {
+          @include flex-center;
+          background: $gray-100;
+          color: $gray-400;
+        }
+        
+        .product-details {
+          flex: 1;
+          
+          .product-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: $gray-800;
+            margin: 0 0 0.25rem 0;
+          }
+          
+          .product-slug {
+            font-size: 0.75rem;
+            color: $gray-500;
+            margin: 0 0 0.5rem 0;
+            
+            code {
+              background: $gray-100;
+              padding: 0.125rem 0.375rem;
+              border-radius: 4px;
+              font-family: 'Fira Code', monospace;
+            }
+          }
+          
+          .product-category {
+            font-size: 0.8125rem;
+            color: $gray-600;
+            margin: 0 0 0.75rem 0;
+            
+            .category-name {
+              display: inline-flex;
+              align-items: center;
+              padding: 0.25rem 0.5rem;
+              background: $secondary-green;
+              color: $accent-green;
+              border-radius: 4px;
+              font-weight: 500;
+              font-size: 0.75rem;
+            }
+          }
+          
+          .product-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+            
+            .price {
+              font-weight: 600;
+              color: $primary-green;
+              font-size: 0.9375rem;
+            }
+            
+            .stock {
+              display: inline-flex;
+              align-items: center;
+              padding: 0.25rem 0.5rem;
+              background: $success;
+              color: $white;
+              border-radius: 4px;
+              font-size: 0.75rem;
+              font-weight: 500;
+              
+              &.low-stock {
+                background: $warning;
+              }
+            }
+          }
+          
+          .product-description {
+            font-size: 0.8125rem;
+            color: $gray-600;
+            margin: 0;
+            line-height: 1.4;
+          }
+        }
+      }
+      
+      .card-actions {
+        @include flex-between;
+        gap: 0.5rem;
+        
+        .btn-edit-mobile, .btn-delete-mobile {
+          @include flex-center;
+          width: 40px;
+          height: 40px;
+          border-radius: 8px;
+          border: none;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          
+          svg {
+            width: 16px;
+            height: 16px;
+          }
+        }
+        
+        .btn-edit-mobile {
+          background: $info;
+          color: $white;
+          
+          &:hover {
+            background: darken($info, 10%);
+          }
+        }
+        
+        .btn-delete-mobile {
+          background: $danger;
+          color: $white;
+          
+          &:hover {
+            background: darken($danger, 10%);
+          }
+        }
+      }
+    }
+  }
+}
+
+// Pagination
+.pagination {
+  @include flex-between;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: $white;
+  border-radius: 12px;
+  @include card-shadow;
+  
+  @media (max-width: $tablet) {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .btn-pagination {
+    @include button-base;
+    background: $white;
+    color: $gray-700;
+    border: 2px solid $gray-200;
+    
+    &:hover:not(:disabled) {
+      background: $primary-green;
+      color: $white;
+      border-color: $primary-green;
+    }
+    
+    &:disabled {
+      background: $gray-100;
+      color: $gray-400;
+      border-color: $gray-200;
+    }
+    
+    .btn-text {
+      @media (max-width: $mobile) {
+        display: none;
+      }
+    }
+    
+    svg {
+      width: 14px;
+      height: 14px;
+    }
+  }
+  
+  .pagination-numbers {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    
+    @media (max-width: $tablet) {
+      order: -1;
+    }
+    
+    .btn-page {
+      @include flex-center;
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      border: 2px solid $gray-200;
+      background: $white;
+      color: $gray-700;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      
+      &:hover {
+        background: $primary-green;
+        color: $white;
+        border-color: $primary-green;
+      }
+      
+      &.active {
+        background: $primary-green;
+        color: $white;
+        border-color: $primary-green;
+      }
+    }
+    
+    .pagination-dots {
+      color: $gray-500;
+      font-weight: 500;
+      padding: 0 0.25rem;
+    }
+  }
+  
+  .mobile-pagination-info {
+    display: none;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: $gray-600;
+    
+    @media (max-width: $tablet) {
+      display: flex;
+    }
+    
+    .current-page {
+      font-weight: 600;
+      color: $primary-green;
+    }
+    
+    .total-pages {
+      font-weight: 600;
+      color: $gray-700;
+    }
+  }
+}
+
+// Animations
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+// Utility Classes
+.low-stock {
+  background: $warning !important;
+  color: $white !important;
+}
+
+// Responsive Design Enhancements
+@media (max-width: $mobile) {
+  .products-page .container {
+    padding: 0.75rem 0.5rem;
+  }
+  
+  .page-header {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    
+    .header-content .page-title {
+      font-size: 1.5rem;
+    }
+  }
+  
+  .search-section {
+    margin-bottom: 1.5rem;
+    
+    .search-form {
+      padding: 1rem;
+    }
+  }
+  
+  .mobile-cards .product-card .card-header {
+    padding: 1rem;
+    
+    .product-main {
+      .product-image, .product-placeholder {
+        width: 60px;
+        height: 60px;
+      }
+    }
+  }
+  
+  .pagination {
+    padding: 1rem;
+  }
+}

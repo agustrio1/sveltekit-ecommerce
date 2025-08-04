@@ -1,0 +1,1164 @@
+// Import color module for modern color functions
+@use "sass:color";
+
+// Variables
+$primary-color: #00AA5B;
+$secondary-color: #03AC0E;
+$accent-color: #FF6B35;
+$error-color: #E53E3E;
+$warning-color: #FF8A00;
+$info-color: #0EA5E9;
+$success-color: #16A34A;
+
+$text-primary: #212121;
+$text-secondary: #6B7280;
+$text-light: #9CA3AF;
+$text-white: #FFFFFF;
+
+$bg-primary: #FFFFFF;
+$bg-secondary: #F8FAFC;
+$bg-tertiary: #F1F5F9;
+$bg-overlay: rgba(0, 0, 0, 0.5);
+
+$border-light: #E5E7EB;
+$border-medium: #D1D5DB;
+$border-dark: #9CA3AF;
+
+$shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+$shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+$shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+$radius-sm: 4px;
+$radius-md: 8px;
+$radius-lg: 12px;
+$radius-xl: 16px;
+
+$transition-fast: all 0.15s ease;
+$transition-normal: all 0.3s ease;
+$transition-slow: all 0.5s ease;
+
+// Mixins
+@mixin button-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-radius: $radius-md;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: $transition-fast;
+  white-space: nowrap;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+@mixin button-primary {
+  @include button-base;
+  background: linear-gradient(135deg, $primary-color 0%, $secondary-color 100%);
+  color: $text-white;
+  border-color: $primary-color;
+
+  &:hover:not(:disabled) {
+    background: linear-gradient(135deg, color.adjust($primary-color, $lightness: -10%) 0%, color.adjust($secondary-color, $lightness: -10%) 100%);
+    transform: translateY(-1px);
+    box-shadow: $shadow-md;
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+}
+
+@mixin button-outline {
+  @include button-base;
+  background: $bg-primary;
+  color: $primary-color;
+  border-color: $border-medium;
+
+  &:hover:not(:disabled) {
+    background: $bg-secondary;
+    border-color: $primary-color;
+    color: $primary-color;
+  }
+}
+
+@mixin button-danger {
+  @include button-base;
+  background: $error-color;
+  color: $text-white;
+  border-color: $error-color;
+
+  &:hover:not(:disabled) {
+    background: color.adjust($error-color, $lightness: -10%);
+    transform: translateY(-1px);
+    box-shadow: $shadow-md;
+  }
+}
+
+@mixin card-base {
+  background: $bg-primary;
+  border: 1px solid $border-light;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-sm;
+  transition: $transition-normal;
+
+  &:hover {
+    box-shadow: $shadow-md;
+    border-color: $border-medium;
+  }
+}
+
+@mixin status-badge($color) {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: $radius-sm;
+  font-size: 12px;
+  font-weight: 500;
+  background: rgba($color, 0.1);
+  color: $color;
+  border: 1px solid rgba($color, 0.2);
+}
+
+// Loading
+.loading-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: 16px;
+
+  .loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid $border-light;
+    border-top: 3px solid $primary-color;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+
+    &.large {
+      width: 60px;
+      height: 60px;
+      border-width: 4px;
+    }
+  }
+
+  p {
+    color: $text-secondary;
+    font-size: 16px;
+  }
+}
+
+// Main Container
+.transactions-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 16px;
+
+  @media (max-width: 768px) {
+    padding: 16px 12px;
+  }
+}
+
+// Header
+.transactions-header {
+  margin-bottom: 32px;
+
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: 16px;
+      align-items: flex-start;
+    }
+  }
+
+  .header-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: $text-primary;
+      margin: 0;
+
+      @media (max-width: 768px) {
+        font-size: 24px;
+      }
+    }
+
+    svg {
+      color: $primary-color;
+    }
+  }
+
+  .header-actions {
+    display: flex;
+    gap: 12px;
+
+    @media (max-width: 768px) {
+      width: 100%;
+      justify-content: space-between;
+    }
+  }
+}
+
+// Summary Cards
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.summary-card {
+  @include card-base;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  .card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: $radius-lg;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &.total {
+      background: #00AA5B;
+      color: $text-white;
+    }
+
+    &.amount {
+      background: #00AA5B;
+      color: $text-white;
+    }
+
+    &.pending {
+      background: #00AA5B;
+      color: $text-white;
+    }
+
+    &.delivered {
+      background: linear-gradient(135deg, $success-color 0%, #22C55E 100%);
+      color: $text-white;
+    }
+  }
+
+  .card-content {
+    flex: 1;
+
+    .card-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: $text-primary;
+      margin-bottom: 4px;
+
+      @media (max-width: 768px) {
+        font-size: 20px;
+      }
+    }
+
+    .card-label {
+      font-size: 14px;
+      color: $text-secondary;
+    }
+  }
+}
+
+// Alerts
+.alert {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border-radius: $radius-md;
+  margin-bottom: 24px;
+  font-size: 14px;
+
+  button {
+    margin-left: auto;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: inherit;
+    opacity: 0.7;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  &.alert-error {
+    background: rgba($error-color, 0.1);
+    color: $error-color;
+    border: 1px solid rgba($error-color, 0.2);
+  }
+
+  &.alert-success {
+    background: rgba($success-color, 0.1);
+    color: $success-color;
+    border: 1px solid rgba($success-color, 0.2);
+  }
+}
+
+// Filters Section
+.filters-section {
+  @include card-base;
+  margin-bottom: 24px;
+  overflow: hidden;
+
+  .filters-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid $border-light;
+
+    .filters-toggle {
+      @include button-outline;
+      padding: 12px 16px;
+
+      &.active {
+        background: $bg-tertiary;
+        color: $primary-color;
+      }
+    }
+  }
+
+  .filters-content {
+    padding: 0 20px;
+    max-height: 0;
+    overflow: hidden;
+    transition: $transition-normal;
+
+    &.show {
+      max-height: 300px;
+      padding: 20px;
+    }
+  }
+
+  .filters-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px;
+    margin-bottom: 16px;
+
+    @media (max-width: 768px) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 4px;
+    }
+
+    @media (max-width: 480px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    .filter-label {
+      font-size: 14px;
+      font-weight: 500;
+      color: $text-primary;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .filter-select {
+      padding: 10px 12px;
+      border: 1px solid $border-medium;
+      border-radius: $radius-md;
+      font-size: 14px;
+      background: $bg-primary;
+      color: $text-primary;
+      transition: $transition-fast;
+
+      &:focus {
+        outline: none;
+        border-color: $primary-color;
+        box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+      }
+    }
+  }
+
+  .search-row {
+    margin-top: 1px;
+
+    .search-group {
+      position: relative;
+      display: flex;
+      align-items: center;
+
+      .search-icon {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: $text-light;
+      }
+
+      .search-input {
+        width: 100%;
+        padding: 12px 12px 12px 40px;
+        border: 1px solid $border-medium;
+        border-radius: $radius-md;
+        font-size: 14px;
+        background: $bg-primary;
+        color: $text-primary;
+        transition: $transition-fast;
+
+        &::placeholder {
+          color: $text-light;
+        }
+
+        &:focus {
+          outline: none;
+          border-color: $primary-color;
+          box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+        }
+
+        @media (max-width: 768px) {
+          width: 100%;
+          font-size: 13px;
+          padding: 10px 10px 10px 36px;
+        }
+
+        @media (max-width: 480px) {
+          font-size: 12px;
+          padding: 8px 8px 8px 32px;
+        }
+      }
+    }
+  }
+
+}
+
+// Empty State
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  text-align: center;
+
+  svg {
+    color: $text-light;
+    margin-bottom: 24px;
+  }
+
+  h3 {
+    font-size: 24px;
+    font-weight: 600;
+    color: $text-primary;
+    margin: 0 0 12px 0;
+  }
+
+  p {
+    font-size: 16px;
+    color: $text-secondary;
+    margin: 0 0 32px 0;
+    max-width: 400px;
+  }
+}
+
+// Transactions List
+.transactions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.transaction-card {
+  @include card-base;
+  padding: 20px;
+  transition: $transition-normal;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-lg;
+  }
+
+  .transaction-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .transaction-info {
+      .transaction-number {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        color: $text-primary;
+        margin-bottom: 4px;
+
+        svg {
+          color: $primary-color;
+        }
+      }
+
+      .transaction-date {
+        font-size: 14px;
+        color: $text-secondary;
+      }
+    }
+
+    .transaction-status {
+      .status-badge {
+        &.status-pending {
+          @include status-badge($warning-color);
+        }
+
+        &.status-paid {
+          @include status-badge($info-color);
+        }
+
+        &.status-processing {
+          @include status-badge(#8B5CF6);
+        }
+
+        &.status-shipped {
+          @include status-badge(#06B6D4);
+        }
+
+        &.status-delivered {
+          @include status-badge($success-color);
+        }
+
+        &.status-cancelled {
+          @include status-badge($text-secondary);
+        }
+
+        &.status-failed {
+          @include status-badge($error-color);
+        }
+      }
+    }
+  }
+
+  .transaction-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 16px;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .transaction-details {
+      flex: 1;
+
+      .detail-row {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 6px;
+        font-size: 14px;
+
+        .detail-label {
+          color: $text-secondary;
+          min-width: 80px;
+        }
+
+        .detail-value {
+          color: $text-primary;
+          font-weight: 500;
+        }
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    .transaction-amount {
+      text-align: right;
+
+      @media (max-width: 768px) {
+        text-align: left;
+        width: 100%;
+      }
+
+      .amount-label {
+        font-size: 12px;
+        color: $text-secondary;
+        margin-bottom: 4px;
+      }
+
+      .amount-value {
+        font-size: 20px;
+        font-weight: 700;
+        color: $primary-color;
+
+        @media (max-width: 768px) {
+          font-size: 18px;
+        }
+      }
+    }
+  }
+
+  .transaction-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    border-top: 1px solid $border-light;
+    padding-top: 16px;
+
+    @media (max-width: 480px) {
+      .btn {
+        flex: 1;
+        min-width: 0;
+      }
+    }
+  }
+}
+
+// Pagination
+.pagination {
+  @include card-base;
+  padding: 20px;
+  margin-top: 24px;
+
+  .pagination-info {
+    font-size: 14px;
+    color: $text-secondary;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+
+  .pagination-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .items-per-page {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+
+      label {
+        color: $text-secondary;
+      }
+
+      select {
+        padding: 6px 8px;
+        border: 1px solid $border-medium;
+        border-radius: $radius-sm;
+        font-size: 14px;
+        background: $bg-primary;
+      }
+    }
+
+    .page-navigation {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .page-numbers {
+        display: flex;
+        gap: 4px;
+
+        .page-btn {
+          width: 36px;
+          height: 36px;
+          border: 1px solid $border-medium;
+          background: $bg-primary;
+          color: $text-primary;
+          border-radius: $radius-sm;
+          cursor: pointer;
+          transition: $transition-fast;
+
+          &:hover {
+            background: $bg-secondary;
+            border-color: $primary-color;
+          }
+
+          &.active {
+            background: $primary-color;
+            color: $text-white;
+            border-color: $primary-color;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Buttons
+.btn {
+  &.btn-primary {
+    @include button-primary;
+  }
+
+  &.btn-outline {
+    @include button-outline;
+  }
+
+  &.btn-danger {
+    @include button-danger;
+  }
+
+  &.btn-sm {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+}
+
+// Modal
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: $bg-overlay;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 0; // Remove padding for mobile
+
+  // Desktop styles
+  @media (min-width: 769px) {
+    padding: 20px;
+    align-items: center;
+  }
+
+  .modal-content {
+    background: $bg-primary;
+    border-radius: 0; // No radius on mobile
+    box-shadow: $shadow-xl;
+    width: 100%;
+    height: 100vh; // Full height on mobile
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+
+    // Desktop styles
+    @media (min-width: 769px) {
+      border-radius: $radius-xl;
+      max-width: 800px;
+      height: auto;
+      max-height: 90vh;
+    }
+
+    &.transaction-detail {
+      .modal-body {
+        overflow-y: auto;
+        flex: 1;
+        padding-bottom: 80px; // Space for mobile actions bar
+
+        @media (min-width: 769px) {
+          padding-bottom: 24px;
+        }
+      }
+    }
+  }
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    border-bottom: 1px solid $border-light;
+    background: $bg-primary;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+
+    @media (min-width: 769px) {
+      padding: 24px;
+      position: static;
+    }
+
+    h3 {
+      font-size: 18px;
+      font-weight: 600;
+      color: $text-primary;
+      margin: 0;
+
+      @media (min-width: 769px) {
+        font-size: 20px;
+      }
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: $text-secondary;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: $radius-sm;
+      transition: $transition-fast;
+
+      &:hover {
+        background: $bg-secondary;
+        color: $text-primary;
+      }
+    }
+  }
+
+  .modal-body {
+    padding: 16px;
+
+    @media (min-width: 769px) {
+      padding: 24px;
+    }
+
+    .detail-section {
+      margin-bottom: 24px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      h4 {
+        font-size: 16px;
+        font-weight: 600;
+        color: $text-primary;
+        margin: 0 0 12px 0;
+        padding-bottom: 6px;
+        border-bottom: 2px solid $primary-color;
+        display: inline-block;
+      }
+
+      .detail-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+
+        @media (min-width: 769px) {
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 16px;
+        }
+
+        .detail-item {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+
+          &.full-width {
+            grid-column: 1 / -1;
+          }
+
+          .label {
+            font-size: 12px;
+            font-weight: 500;
+            color: $text-secondary;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+          }
+
+          .value {
+            font-size: 14px;
+            color: $text-primary;
+
+            &.total {
+              font-size: 18px;
+              font-weight: 700;
+              color: $primary-color;
+            }
+          }
+        }
+      }
+
+      .items-list {
+        .item-row {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          padding: 12px;
+          border: 1px solid $border-light;
+          border-radius: $radius-md;
+          margin-bottom: 8px;
+
+          @media (min-width: 769px) {
+            padding: 16px;
+            margin-bottom: 12px;
+          }
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+
+          .item-info {
+            flex: 1;
+
+            .item-name {
+              font-weight: 500;
+              color: $text-primary;
+              margin-bottom: 4px;
+              font-size: 14px;
+            }
+
+            .item-description {
+              font-size: 12px;
+              color: $text-secondary;
+            }
+          }
+
+          .item-details {
+            text-align: right;
+
+            .item-price {
+              font-size: 12px;
+              color: $text-secondary;
+              margin-bottom: 4px;
+
+              @media (min-width: 769px) {
+                font-size: 14px;
+              }
+            }
+
+            .item-total {
+              font-size: 14px;
+              font-weight: 600;
+              color: $text-primary;
+
+              @media (min-width: 769px) {
+                font-size: 16px;
+              }
+            }
+          }
+        }
+      }
+
+      .cost-summary {
+        background: $bg-secondary;
+        padding: 16px;
+        border-radius: $radius-md;
+
+        @media (min-width: 769px) {
+          padding: 20px;
+        }
+
+        .cost-row {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 8px;
+          font-size: 14px;
+
+          @media (min-width: 769px) {
+            margin-bottom: 12px;
+          }
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+
+          &.total {
+            font-size: 16px;
+            font-weight: 700;
+            color: $primary-color;
+            padding-top: 12px;
+
+            @media (min-width: 769px) {
+              font-size: 18px;
+            }
+          }
+        }
+
+        .cost-divider {
+          height: 1px;
+          background: $border-medium;
+          margin: 12px 0;
+
+          @media (min-width: 769px) {
+            margin: 16px 0;
+          }
+        }
+      }
+
+      .order-note {
+        background: $bg-secondary;
+        padding: 12px;
+        border-radius: $radius-md;
+        font-size: 14px;
+        color: $text-primary;
+        line-height: 1.5;
+        margin: 0;
+
+        @media (min-width: 769px) {
+          padding: 16px;
+        }
+      }
+    }
+  }
+}
+
+// Mobile Actions Bar - Fixed to modal bottom
+.modal-actions-mobile {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px;
+  background: $bg-primary;
+  border-top: 1px solid $border-light;
+  z-index: 20;
+
+  @media (min-width: 769px) {
+    display: none; // Hide on desktop
+  }
+
+  .btn {
+    flex: 1;
+    justify-content: center;
+    padding: 12px 16px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+}
+
+// Desktop Modal Footer (hidden on mobile)
+.modal-footer {
+  display: none;
+
+  @media (min-width: 769px) {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 24px;
+    border-top: 1px solid $border-light;
+    background: $bg-secondary;
+  }
+}
+
+// Animations
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.spinning {
+  animation: spin 1s linear infinite;
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .transactions-container {
+    padding: 16px 12px;
+  }
+
+  .summary-cards {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .transaction-card {
+    padding: 16px;
+
+    .transaction-header {
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .transaction-body {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .transaction-actions {
+      .btn {
+        flex: 1;
+        justify-content: center;
+      }
+    }
+  }
+
+  .modal-content {
+    margin: 20px;
+    max-height: calc(100vh - 40px);
+  }
+
+  .modal-header,
+  .modal-body,
+  .modal-footer {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .summary-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .filters-row {
+    grid-template-columns: 1fr;
+  }
+
+  .pagination-controls {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .transaction-actions {
+    flex-direction: column;
+
+    .btn {
+      width: 100%;
+    }
+  }
+}

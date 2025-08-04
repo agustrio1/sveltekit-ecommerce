@@ -1,0 +1,34 @@
+{
+  "version": "7",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1753183013726,
+      "tag": "0000_soft_norman_osborn",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1753183949455,
+      "tag": "0001_chunky_captain_flint",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1753239563404,
+      "tag": "0002_hot_shatterstar",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1753839092285,
+      "tag": "0003_closed_sally_floyd",
+      "breakpoints": true
+    }
+  ]
+}
